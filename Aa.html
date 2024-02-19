@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Surprise</title>
+    <!-- CSS -->
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: black; /* Changed background color to black */
+            font-family: 'Sego UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+        }
+
+        #helloTitle {
+            font-size: 95px;
+            position: absolute;
+            top: 280px;
+            font-weight: bold;
+            text-align: center;
+            color: transparent; /* Make text transparent */
+            text-shadow: 0 0 10px rgba(255, 255, 0, 0.5); /* Add a neon soft yellow outline */
+        }
+
+        .neon-letter {
+            animation: neon-soft-yellow 1.5s ease-in-out infinite alternate;
+            opacity: 0;
+        }
+
+        @keyframes neon-soft-yellow {
+            from {
+                color: transparent; /* Start with transparent color */
+                text-shadow: 0 0 10px rgba(255, 255, 0, 0.5); /* Start with neon soft yellow outline */
+                opacity: 0.5; /* Adjust opacity for the initial appearance */
+            }
+            to {
+                color: #ffdb00; /* Transition to neon soft yellow color */
+                text-shadow: 0 0 20px rgba(255, 255, 0, 1); /* Increase outline size */
+                opacity: 1; /* Fully visible neon effect */
+            }
+        }
+
+        #subTitle {
+            position: absolute;
+            font-size: 20px;
+            font-weight: bold;
+            text-align: center;
+            color: #808080;
+            bottom: 400px;
+        }
+
+        .openingMessage {
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s ease-in-out;
+            position: absolute; /* Position absolutely */
+            bottom: 350px; /* Adjust the distance from the bottom */
+            color: white; /* Set color to white */
+        }
+
+        .openingMessage:hover {
+            transform: scale(1.1);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .birthdayCard {
+            position: absolute;
+            width: 250px;
+            height: 350px;
+            cursor: pointer;
+            transform-style: preserve-3d;
+            transform: perspective(2500px) rotateY(180deg);
+            transition: 1s;
+            border-radius: 10px;
+        }
+
+        .birthdayCard.flip {
+            transform: perspective(2500px) rotateY(0deg);
+        }
+
+        .birthdayCard:hover {
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .birthdayCard:hover .cardFront {
+            transform: rotateY(-160deg);
+        }
+
+        .cardFront {
+            position: relative;
+            background-color: #ffef96;
+            width: calc(100%);
+            height: calc(100%);
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            transform-origin: left;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            transition: 0.6s;
+        }
+
+        .happy {
+            position: absolute;
+            top: 40px;
+            font-size: 22px;
+            margin: 0;
+            background-image: linear-gradient(120deg, #ffd856 0%, #f98c6e 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            transition: 0.1s;
+        }
+
+        .balloons {
+            position: absolute;
+        }
+
+        .balloon-1,
+        .balloon-2,
+        .balloon-3,
+        .balloon-4 {
+            position: absolute;
+            width: 85px;
+            height: 90px;
+            border-radius: 50%;
+        }
+
+        .balloon-1 {
+            background-color: rgba(255, 40, 90, 0.7);
+            left: -80px;
+            top: 50px;
+        }
+
+        .balloon-2 {
+            background-color: rgba(9, 215, 160, 0.7);
+            left: -20px;
+            top: 20px;
+        }
+
+        .balloon-3 {
+            background-color: rgba(255, 186, 26, 0.7);
+            left: 50px;
+            top: 50px;
+        }
+
+        .balloon-4 {
+            background-color: rgba(12, 122, 159, 0.7);
+            left: 170px;
+            top: 50px;
+        }
+
+        .balloon-1::before,
+        .balloon-2::before,
+        .balloon-3::before,
+        .balloon-4::before {
+            content: "";
+            position: absolute;
+            width: 1px;
+            height: 155px;
+            background-color: #ffc848;
+            top: 95px;
+            left: 43px;
+        }
+
+        .balloon-1::after,
+        .balloon-2::after,
+        .balloon-3::after,
+        .balloon-4::after {
+            content: "";
+            position: absolute;
+            border-right: 7px solid transparent;
+            border-left: 7px solid transparent;
+            top: 94px;
+            left: 37px;
+        }
+
+        .balloon-1::after {
+            border-bottom: 10px solid #ff3e6b;
+        }
+
+        .balloon-2::after {
+            border-bottom: 10px solid #04b183;
+        }
+
+        .balloon-3::after {
+            border-bottom: 10px solid #ffc94c;
+        }
+
+        .balloon-4::after {
+            border-bottom: 13px solid #13a9bd;
+        }
+
+        .cardInside {
+            position: absolute;
+            background-color: #fff;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            left: 0;
+            top: 0;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            box-sizing: border-box;
+        }
+
+        p {
+            margin: 10px;
+            color: #333;
+            line-height: 1.4;
+        }
+
+        .name {
+            margin-top: 10px;
+            font-style: italic; /* Change font style to italic */
+            font-weight: bold;
+            color: #ff7f67;
+            position: absolute;
+            bottom: 90px; /* Adjust the position from the bottom */
+            right: 30px; /* Move the text to the right */
+        }
+
+        .back {
+            font-size: 15px;
+            color: #333;
+            font-style: italic;
+            position: absolute;
+            top: 80px; /* Adjust the position from the top */
+            left: 30px; /* Move the text to the left */
+        }
+
+        .big-number {
+            font-size: 70px;
+        }
+
+        .small-number {
+            font-size: 22px;
+            position: center;
+        }
+
+
+    </style>
+</head>
+<body>
+    <div id="helloTitle">
+        <span class="neon-letter">H</span>
+        <span class="neon-letter">E</span>
+        <span class="neon-letter">L</span>
+        <span class="neon-letter">L</span>
+        <span class="neon-letter">O</span>
+        <br>
+        <span class="neon-letter">A</span>
+        <span class="neon-letter">M</span>
+        <span class="neon-letter">I</span>
+        <span class="neon-letter">R</span>
+        <span class="neon-letter">A</span>
+    </div>
+    <div id="subTitle">AN E-CARD FOR YOU</div>
+    <div class="openingMessage" onclick="revealCard()">click here to open!</div>
+
+    <div class="birthdayCard hidden" id="birthdayCard">
+        <div class="cardFront">
+            <h3 class="happy custom-font">HAPPY <span class="big-number">25</span>
+                <span class="small-number">TH</span><br>BIRTHDAY!</h3>
+            <div class="balloons">
+                <div class="balloon-1"></div>
+                <div class="balloon-2"></div>
+                <div class="balloon-3"></div>
+                <div class="balloon-4"></div>
+            </div>
+        </div>
+        <div class="cardInside">
+            <h3 class="back">hi amira,</h3>
+            <p style="font-size: 15px;">
+                Wishing you a life filled with love, laughter, and joy!
+                May all your dreams and wishes come true.
+            </p>
+            <p class="name"> faiz</p>
+        </div>
+    </div>
+
+    <script>
+        // Wait for the document to be fully loaded
+        document.addEventListener("DOMContentLoaded", function() {
+            const letters = document.querySelectorAll('.neon-letter');
+            let delay = 0;
+
+            // Iterate through each letter and apply animation delay
+            letters.forEach(function(letter) {
+                letter.style.animationDelay = delay + "s";
+                delay += 0.2; // Adjust the delay between each letter animation
+            });
+        });
+
+        function revealCard() {
+            // Hide the "HELLO THERE!" text and the opening message
+            document.getElementById('helloTitle').style.display = 'none';
+            document.getElementById('subTitle').style.display = 'none';
+            document.querySelector('.openingMessage').style.display = 'none';
+
+            // Reveal the birthday card
+            document.getElementById('birthdayCard').classList.remove('hidden');
+            document.getElementById('birthdayCard').classList.add('flip');
+        }
+    </script>
+</body>
+</html>
